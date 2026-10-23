@@ -144,7 +144,8 @@ function App() {
     [sessionId, setSessionId] = useState(""),
     [passportTab, setPassportTab] = useState("Overview"),
     [error, setError] = useState(""),
-    [formPlayer, setFormPlayer] = useState("p1");
+    [formPlayer, setFormPlayer] = useState("p1"),
+    [resetConfirm, setResetConfirm] = useState(false);
   useEffect(() => {
     try {
       localStorage.setItem("trajectory-v1", JSON.stringify(s));
@@ -218,17 +219,29 @@ function App() {
       .map((a) => a.playerId),
   );
   const approved = plans.filter((p) => p.approved);
+  const squadSessions = s.interventions.filter(
+    (i) =>
+      squad === "All squads" ||
+      s.plans.some((p) => p.id === i.planId && filteredIds.has(p.playerId)) ||
+      s.clusters.some(
+        (c) =>
+          c.id === i.clusterId && c.playerIds.some((id) => filteredIds.has(id)),
+      ),
+  );
   const score = (id: string) => {
     const a = [...s.assessments]
       .filter((a) => a.playerId === id)
       .sort((a, b) => a.date.localeCompare(b.date))
       .at(-1);
-    return a ? avg([a.technical, a.physical, a.tactical, a.psychological]) : 0;
+    return a
+      ? avg([a.technical, a.physical, a.tactical, a.psychological])
+      : null;
   };
   const open = (m: Modal, id = "") => {
     setEdit(id);
     setFormPlayer(s.plans.find((p) => p.id === id)?.playerId || selected);
     setError("");
+    setResetConfirm(false);
     setModal(m);
   };
   const go = (p: Page) => setPage(p);
@@ -250,8 +263,10 @@ function App() {
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
     a.download = "trajectory-academy.json";
+    document.body.appendChild(a);
     a.click();
-    URL.revokeObjectURL(a.href);
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
     setToast("Academy data exported");
   };
   const record = (e: React.FormEvent<HTMLFormElement>) => {
@@ -590,7 +605,7 @@ function App() {
     );
   }
   function Sessions({ compact = false }: { compact?: boolean }) {
-    const items = s.interventions
+    const items = (compact ? squadSessions : s.interventions)
       .filter((i) => i.status === "Scheduled")
       .sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time));
     return (
@@ -915,11 +930,10 @@ function App() {
                   },
                   {
                     label: "Sessions completed",
-                    value: s.interventions.filter(
-                      (i) => i.status === "Completed",
-                    ).length,
+                    value: squadSessions.filter((i) => i.status === "Completed")
+                      .length,
                     note:
-                      s.interventions.filter((i) => i.status === "Scheduled")
+                      squadSessions.filter((i) => i.status === "Scheduled")
                         .length + " sessions coming up",
                     icon: CalendarDays,
                     color: "blue",
@@ -1159,7 +1173,7 @@ function App() {
                       </p>
                       <div className="player-stats">
                         <span>
-                          <b>{score(p.id) || "–"}</b>
+                          <b>{score(p.id) ?? "N/A"}</b>
                           <small>Coach rating</small>
                         </span>
                         <span>
@@ -1621,7 +1635,7 @@ function App() {
                   </div>
                 </div>
                 <div className="passport-rating">
-                  <span>{score(player.id) || "–"}</span>
+                  <span>{score(player.id) ?? "N/A"}</span>
                   <small>COACH RATING / 100</small>
                   <p>Latest recorded assessment</p>
                 </div>
@@ -1679,7 +1693,7 @@ function App() {
                           <div key={label}>
                             <small>{label}</small>
                             <strong>
-                              {a ? value : "–"}
+                              {a ? value : "N/A"}
                               <span>/100</span>
                             </strong>
                             <div className="progress">
@@ -1923,19 +1937,43 @@ function App() {
                 <button className="btn secondary full" onClick={exportData}>
                   <Download size={16} /> Export academy data
                 </button>
-                <button
-                  className="btn danger full"
-                  onClick={() => {
-                    if (
-                      window.confirm(
-                        "Reset all changes and restore the fictional demo dataset?",
-                      )
-                    )
-                      save(structuredClone(initial), "Demo data restored");
-                  }}
-                >
-                  <RotateCcw size={16} /> Reset demo data
-                </button>
+                {resetConfirm ? (
+                  <div className="reset-confirm" role="alert">
+                    <h3>Restore the sample academy?</h3>
+                    <p>
+                      This replaces changes saved in this browser. Export your
+                      records first if you want to keep them.
+                    </p>
+                    <div className="split">
+                      <button
+                        className="btn secondary"
+                        onClick={() => setResetConfirm(false)}
+                      >
+                        Keep my changes
+                      </button>
+                      <button
+                        className="btn danger"
+                        onClick={() => {
+                          setSelected("p1");
+                          setSquad("All squads");
+                          setSearch("");
+                          setPassportTab("Overview");
+                          setResetConfirm(false);
+                          save(structuredClone(initial), "Demo data restored");
+                        }}
+                      >
+                        Restore sample academy
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <button
+                    className="btn danger full"
+                    onClick={() => setResetConfirm(true)}
+                  >
+                    <RotateCcw size={16} /> Reset demo data
+                  </button>
+                )}
               </div>
             ) : modal === "notifications" ? (
               <div className="notifications-content">
