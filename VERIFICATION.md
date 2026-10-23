@@ -6,7 +6,7 @@ Verified on 23 October 2026. Application: Trajectory. Browser: Chrome. Fictional
 
 - TypeScript compilation and Vite production build passed.
 - Four Node test groups passed: demo relationships, measurement chronology and bounds, baseline defaults, and localStorage loading and malformed JSON recovery.
-- Production dependency audit reported no known vulnerabilities.
+- Dependency installation initially reported zero vulnerabilities. A later standalone audit refresh could not reach the registry endpoint.
 - No em dash characters in application source or shipped copy.
 
 ## Full browser workflow
@@ -37,7 +37,7 @@ A measurement of 18 was recorded. The passport displayed baseline 10, current 18
 
 ## Deployment
 
-The GitHub repository was created under elprofessor-15 as a private repository. Vercel connected the repository and deployed the static build on the existing Hobby team. The production URL returned HTTP 200 without a login challenge. No billing details, paid APIs, backend or payment integration were added.
+The GitHub repository was created under elprofessor-15 as a private repository. Vercel connected the repository and deployed the static build on the existing Hobby team. The production URL returned HTTP 200 without a login challenge. A subsequent update was blocked by Vercel because the local Git author email was unrecognised; repository-scoped Git identity was then corrected to the authenticated GitHub account’s noreply address before redeploying. No billing details, paid APIs, backend or payment integration were added.
 
 ## Scope of verification
 

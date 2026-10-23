@@ -905,7 +905,9 @@ function App() {
                     note:
                       "Across " +
                       new Set(visible.map((p) => p.squad)).size +
-                      " age groups",
+                      (new Set(visible.map((p) => p.squad)).size === 1
+                        ? " age group"
+                        : " age groups"),
                     icon: Users,
                     color: "green",
                   },
@@ -934,7 +936,11 @@ function App() {
                       .length,
                     note:
                       squadSessions.filter((i) => i.status === "Scheduled")
-                        .length + " sessions coming up",
+                        .length +
+                      (squadSessions.filter((i) => i.status === "Scheduled")
+                        .length === 1
+                        ? " session coming up"
+                        : " sessions coming up"),
                     icon: CalendarDays,
                     color: "blue",
                   },
