@@ -2600,3 +2600,23 @@ nav,
   margin: 0;
   background: #fff;
 }
+
+/* Supplied Trajectree identity, reproduced as a scalable tree and football mark. */
+.brand-logo-mark {
+  width: 43px;
+  height: 51px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+.brand {
+  gap: 9px;
+  font-size: 17px;
+  letter-spacing: 0.8px;
+}
+.brand small {
+  letter-spacing: 1.6px;
+  font-size: 6.5px;
+}
+.passport-identity .eyebrow {
+  letter-spacing: 1.4px;
+}

@@ -1,6 +1,6 @@
 # Verification record
 
-Verified on 23 October 2026. Application: Trajectory. Browser: Chrome. Fictional data only.
+Verified on 23 October 2026. Application: Trajectree. Browser: Chrome. Fictional data only.
 
 ## Build and automated checks
 
@@ -42,3 +42,7 @@ The GitHub repository was created under elprofessor-15 as a private repository. 
 ## Scope of verification
 
 Browser QA covers the flows above, not every possible combination of invalid input, browser extension or device. The app stores data separately per browser and origin, without server synchronisation. Coach and player modes are presentation shortcuts, not access controls. Printing uses the browser print dialog and a dedicated print stylesheet; physical printed output was not verified.
+
+## Branding update, 24 October 2026
+
+Replaced the visible Trajectory name with TRAJECTREE, matching the supplied wordmark. Added scalable tree-and-football SVG assets, updated the favicon, document title, modal branding, passport label and JSON export filename. Kept the existing localStorage key to preserve browser records. The production build and all four data test groups passed after these changes. Desktop branding was visually reviewed before publication.

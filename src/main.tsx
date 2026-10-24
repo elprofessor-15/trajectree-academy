@@ -262,7 +262,7 @@ function App() {
     });
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = "trajectory-academy.json";
+    a.download = "trajectree-academy.json";
     document.body.appendChild(a);
     a.click();
     a.remove();
@@ -659,11 +659,15 @@ function App() {
             go("Overview");
           }}
         >
-          <span className="brand-mark">
-            <Leaf size={24} />
-          </span>
+          <img
+            className="brand-logo-mark"
+            src="/images/trajectree-mark.svg"
+            alt="Trajectree tree and football logo"
+            width="43"
+            height="51"
+          />
           <span>
-            TRAJECTORY<small>DEVELOPMENT, BY DESIGN</small>
+            TRAJECTREE<small>DEVELOPMENT, BY DESIGN</small>
           </span>
         </a>
         <div className="academy">
@@ -733,7 +737,7 @@ function App() {
             >
               <Menu size={21} />
             </button>
-            <span>Workspace</span>
+            <span>Trajectree</span>
             <ChevronRight size={14} />
             <strong>{page}</strong>
           </div>
@@ -1627,9 +1631,7 @@ function App() {
                 <div className="passport-identity">
                   <Avatar player={player} large />
                   <div>
-                    <div className="eyebrow">
-                      ROOTS FOOTBALL ACADEMY · PLAYER PASSPORT
-                    </div>
+                    <div className="eyebrow">TRAJECTREE · PLAYER PASSPORT</div>
                     <h2>{player.name}</h2>
                     <p>
                       #{player.number} · {player.position} · {player.age} years
@@ -1885,7 +1887,7 @@ function App() {
           >
             <div className="modal-heading">
               <div>
-                <span className="eyebrow">TRAJECTORY WORKSPACE</span>
+                <span className="eyebrow">TRAJECTREE WORKSPACE</span>
                 <h2 id="modal-title">
                   {
                     {

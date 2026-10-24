@@ -1,4 +1,4 @@
-# Trajectory
+# Trajectree
 
 A working football player-development prototype for a case competition. Built for Roots Football Academy, a fictional grassroots academy in Pune.
 
@@ -58,3 +58,9 @@ Browser QA exercised a complete new-player pathway through assessment, approved 
 ## Stack and assets
 
 React 19, TypeScript, Vite, Lucide icons and custom responsive CSS. Fonts: DM Sans and Manrope, with local system fallbacks. Training photograph from Unsplash (`photo-1526232761682-d26e03ac148e`), downloaded into `public/images` so the hero does not require a runtime image service. Player identities and records are fictional. Avatar monograms avoid implying that the photographed children are the demo players.
+
+## Trajectree identity
+
+The tree-and-football emblem is a scalable SVG recreation of the supplied logo reference. `public/images/trajectree-mark.svg` is used in the workspace and favicon; `public/images/trajectree-logo.svg` includes the full wordmark. The legacy localStorage key is intentionally retained so this branding update preserves existing browser records.
+
+For a short jury presentation, use [DEMO_GUIDE.md](DEMO_GUIDE.md).
